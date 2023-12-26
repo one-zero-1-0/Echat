@@ -1,0 +1,17 @@
+# .gitignore for Flutter
+*.iml
+*.lock
+.dart_tool/
+.packages
+.pub/
+/build/
+.idea/
+.vscode/
+*.swn
+*.swo
+*.swp
+*.log
+/ios/Pods/
+/ios/Podfile.lock
+/android/.gradle/
+.DS_Store
