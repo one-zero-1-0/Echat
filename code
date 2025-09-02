@@ -1,0 +1,73 @@
+class RestaurantBilling {
+  #menu = [];    // private array for menu
+  #order = [];   // private array for orders
+  #discount = 0; // private discount percentage
+
+  // Add menu item
+  addMenu(name, price) {
+    this.#menu.push({ name, price });
+  }
+
+  // Show menu using a simple for loop
+  showMenu() {
+    console.log("\n--- Menu ---");
+    for (let i = 0; i < this.#menu.length; i++) {
+      console.log(`${this.#menu[i].name}: ₹${this.#menu[i].price}`);
+    }
+    console.log("------------\n");
+  }
+
+  // Place order
+  placeOrder(name, qty = 1) {
+    for (let i = 0; i < this.#menu.length; i++) {
+      if (this.#menu[i].name === name) {
+        this.#order.push({ name, price: this.#menu[i].price, qty });
+        console.log(`${qty} x ${name} added to order.`);
+        return;
+      }
+    }
+    console.log("Item not found in menu.");
+  }
+
+  // Apply discount (percentage)
+  applyDiscount(percent) {
+    if (percent >= 0 && percent <= 100) {
+      this.#discount = percent;
+      console.log(`Discount of ${percent}% applied.`);
+    } else {
+      console.log("Invalid discount percentage.");
+    }
+  }
+
+  // Print bill
+  printBill() {
+    console.log("\n--- BILL ---");
+    let subtotal = 0;
+    for (let i = 0; i < this.#order.length; i++) {
+      const item = this.#order[i];
+      const lineTotal = item.price * item.qty;
+      subtotal += lineTotal;
+      console.log(`${item.name} x${item.qty} = ₹${lineTotal}`);
+    }
+    console.log(`Subtotal: ₹${subtotal}`);
+    const discountAmt = (subtotal * this.#discount) / 100;
+    console.log(`Discount: ₹${discountAmt}`);
+    const total = subtotal - discountAmt;
+    console.log(`Total: ₹${total}`);
+    console.log("------------\n");
+  }
+}
+
+// ✅ Example usage:
+const restaurant = new RestaurantBilling();
+restaurant.addMenu("Dosa", 40);
+restaurant.addMenu("Idli", 30);
+restaurant.addMenu("Coffee", 20);
+
+restaurant.showMenu();
+
+restaurant.placeOrder("Dosa", 2);
+restaurant.placeOrder("Coffee", 1);
+
+restaurant.applyDiscount(10); // 10% discount
+restaurant.printBill();
